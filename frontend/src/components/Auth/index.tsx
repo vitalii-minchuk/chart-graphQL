@@ -14,18 +14,28 @@ interface IAuthProps {
 
 function Auth({ session, reloadSession }: IAuthProps) {
   const [username, setUsername] = useState("");
-  const [createUsername, { data, loading, error }] = useMutation<
+  const [createUsername, { loading, error }] = useMutation<
     CreateUsernameData,
     CreateUsernameVariables
   >(UserOperations.Mutation.createUsername);
-  console.log(data);
+  console.log(error);
   const handleSave = async () => {
-    console.log("first");
     if (!username.trim()) return;
     try {
-      await createUsername({
-        variables: { username },
-      });
+      const { data } = await createUsername({ variables: { username } });
+
+      if (!data?.createUsername) {
+        throw new Error();
+      }
+
+      if (data.createUsername.error) {
+        const {
+          createUsername: { error },
+        } = data;
+        throw new Error(error);
+      }
+
+      reloadSession();
     } catch (error) {
       console.log("handleSave error", error);
     }
