@@ -6,6 +6,7 @@ import { signIn } from "next-auth/react";
 import Image from "next/image";
 import UserOperations from "../../graphql/operations/user";
 import { CreateUsernameData, CreateUsernameVariables } from "../../util/types";
+import { toast } from "react-toastify";
 
 interface IAuthProps {
   session: Session | null;
@@ -35,8 +36,11 @@ function Auth({ session, reloadSession }: IAuthProps) {
         throw new Error(error);
       }
 
+      toast.success("Username successfully created");
+
       reloadSession();
-    } catch (error) {
+    } catch (error: any) {
+      toast.error(error?.message);
       console.log("handleSave error", error);
     }
   };
@@ -53,7 +57,7 @@ function Auth({ session, reloadSession }: IAuthProps) {
               onChange={(e) => setUsername(e.target.value)}
               type="text"
             />
-            <Button w="full" onClick={handleSave}>
+            <Button w="full" onClick={handleSave} isLoading={loading}>
               save
             </Button>
           </>

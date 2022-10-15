@@ -12,7 +12,6 @@ const resolvers = {
     ): Promise<CreateUsernameResponse> => {
       const { username } = args;
       const { session, prisma } = context;
-      console.log(session);
       if (!session?.user) {
         return {
           error: "Not authorized",
