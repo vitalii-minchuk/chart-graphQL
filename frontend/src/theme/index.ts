@@ -30,6 +30,7 @@ export default extendTheme(
           fontWeight: "bold",
           textTransform: "uppercase",
           bg: "gray.600",
+          transition: "all .3s",
         },
         sizes: {
           sm: {

@@ -9,7 +9,7 @@ interface IChatProps {
 
 function Chart({ session }: IChatProps) {
   return (
-    <Flex h="100vh" border="1px solid red">
+    <Flex h="100vh">
       <ConversationsWrapper session={session} />
       <FeedWrapper session={session} />
     </Flex>

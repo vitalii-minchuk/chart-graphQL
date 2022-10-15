@@ -19,7 +19,7 @@ function Auth({ session, reloadSession }: IAuthProps) {
     CreateUsernameData,
     CreateUsernameVariables
   >(UserOperations.Mutation.createUsername);
-  console.log(error);
+
   const handleSave = async () => {
     if (!username.trim()) return;
     try {

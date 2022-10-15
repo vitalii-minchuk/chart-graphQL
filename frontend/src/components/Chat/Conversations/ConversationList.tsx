@@ -22,12 +22,16 @@ function ConversationList({ session }: IConversationsListProps) {
         borderRadius={4}
         cursor="pointer"
         onClick={onOpen}
+        transition="all .3s"
+        _hover={{
+          filter: "brightness(125%)",
+        }}
       >
         <Text color="whiteAlpha.800" fontWeight="semibold" textAlign="center">
           Find or start a conversation
         </Text>
       </Box>
-      <ConversationModal onClose={onClose} open={isOpen} />
+      <ConversationModal session={session} onClose={onClose} open={isOpen} />
     </Box>
   );
 }
