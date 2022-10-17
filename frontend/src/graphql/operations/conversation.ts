@@ -6,7 +6,7 @@ export default {
     createConversation: gql`
       mutation CreateConversation($participantIds: [String]!) {
         createConversation(participantIds: $participantIds) {
-          conversationId: String
+          conversationId
         }
       }
     `,

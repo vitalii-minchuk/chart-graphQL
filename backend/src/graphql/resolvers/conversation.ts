@@ -5,9 +5,7 @@ const resolvers = {
       _: any,
       args: { participantIds: string[] },
       context: GraphQLContext
-    ) => {
-      console.log("11111111111", args);
-    },
+    ) => {},
   },
 };
 
