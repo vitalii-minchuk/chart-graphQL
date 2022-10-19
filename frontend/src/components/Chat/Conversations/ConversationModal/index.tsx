@@ -24,6 +24,7 @@ import {
 import Participants from "./Participants";
 import UserSearchList from "./UserSearchList";
 import { Session } from "next-auth";
+import { useRouter } from "next/router";
 
 interface IConversationModalProps {
   session: Session;
@@ -47,8 +48,9 @@ function ConversationModal({
   >(UserOperations.Query.searchUsers);
   const [createConversation, { loading: createConversationLoading }] =
     useMutation<CreateConversationData, CreateConversationInput>(
-      ConversationOperations.Mutation.createConversation
+      ConversationOperations.Mutations.createConversation
     );
+  const router = useRouter();
 
   const onSearch = (e: FormEvent) => {
     e.preventDefault();
@@ -70,7 +72,19 @@ function ConversationModal({
       const { data } = await createConversation({
         variables: { participantIds },
       });
-      console.log(data);
+
+      if (!data?.createConversation) {
+        throw new Error("Failed to create conversation");
+      }
+
+      const {
+        createConversation: { conversationId },
+      } = data;
+
+      router.push({ query: { conversationId } });
+      setParticipants([]);
+      setUsername("");
+      onClose();
     } catch (error: any) {
       console.log("onCreateConversation error", error?.massage);
       toast.error(error?.message);
